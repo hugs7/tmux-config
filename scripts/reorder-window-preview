@@ -78,8 +78,6 @@ selected="$(
     fzf \
       --ansi \
       --sync \
-      --border=rounded \
-      --border-label=' GRID REORDER ' \
       --color='bg:#05070d,bg+:#003b46,fg:#c5c8c6,fg+:#00ffff,hl:#00e5ff,hl+:#00ffff' \
       --color='border:#00e5ff,header:#00e5ff,info:#5c6370,label:#00ffff' \
       --color='marker:#ffcc00,pointer:#00ffff,prompt:#00e5ff,spinner:#00ffff' \
