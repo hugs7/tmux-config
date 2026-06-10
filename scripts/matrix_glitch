@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# matrix_glitch — launcher for the window-switch glitch popup.
+#
+# Invoked (via run-shell -b) only when the window actually changed — the
+# hook's if-shell guard handles that. Because run-shell has no client/pane
+# context, everything is resolved against the attached client with -c. It:
+#   1. records the now-current window id so re-selecting the same window is a
+#      no-op,
+#   2. opens a borderless popup sized/positioned to sit exactly over the
+#      active pane's content (P = pane bottom-left anchor), so surrounding
+#      chrome (pane border-status line, status bar) is never disturbed — no
+#      flicker/judder,
+#   3. runs the aberration effect inside it.
+#
+# display-popup -w/-h do not accept formats, so the numeric pane size is
+# resolved here first.
+
+cid="$(tmux list-clients -F '#{client_name}' | head -n1)"
+[ -z "$cid" ] && exit 0
+
+read -r wid w h < <(tmux display-message -p -c "$cid" \
+  '#{window_id} #{pane_width} #{pane_height}')
+
+tmux set -g @morph_last_win "$wid"
+
+tmux display-popup -E -B -c "$cid" -x P -y P -w "$w" -h "$h" \
+  "python3 $HOME/.config/tmux/scripts/matrix_morph.py"
