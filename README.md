@@ -2,6 +2,12 @@
 
 ## Installation
 
+Clone the repo to `~/.config/tmux-config`
+
+```shell
+git clone git@github.com:hugs7/tmux-config.git ~/.config/tmux-config
+```
+
 After cloning, create a symlink at `~/.config/tmux/tmux.conf` to the configuration file in this repo via
 
 ```shell
@@ -22,4 +28,3 @@ tmux source ~/.config/tmux/tmux.conf
 ```
 
 And you're good to go!
-
