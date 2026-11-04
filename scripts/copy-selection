@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Copies a mouse selection to the tmux buffer and system clipboard, ignoring
+# accidental tiny drags (e.g. a click to focus a pane) that would otherwise
+# replace the clipboard with a lone newline, space, or character.
+
+text=$(cat; printf x)
+text=${text%x}
+visible=${text//[[:space:]]/}
+
+((${#visible} < 2)) && exit 0
+
+printf '%s' "$text" | tmux load-buffer -w -
